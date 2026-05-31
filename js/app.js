@@ -6,8 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const openCalcBtn = document.getElementById('openCalcBtn');
   const closeCalcBtn = document.getElementById('closeCalcBtn');
 
-  // Initialize the calculator module by passing it the container ID
-  // (Function is safely loaded globally from ventCalculator.js)
+  // Mobile Drawer Selector Tree Elements
+  const sidebarNode = document.getElementById('sidebar');
+  const sidebarToggle = document.getElementById('sidebarToggleBtn');
+  const sidebarClose = document.getElementById('sidebarCloseBtn');
+
+  // Trigger Sidebar Sliding Drawer Handlers
+  if (sidebarToggle && sidebarClose && sidebarNode) {
+    sidebarToggle.addEventListener('click', () => sidebarNode.classList.remove('-translate-x-full'));
+    sidebarClose.addEventListener('click', () => sidebarNode.classList.add('-translate-x-full'));
+  }
+
+  // Global Engine Module Injection Setup
   if (typeof initVentCalculator === 'function') {
     initVentCalculator('vent-calc-container');
   }

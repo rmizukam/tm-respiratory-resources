@@ -11,12 +11,15 @@
 </head>
 <body class="flex h-full overflow-hidden font-sans antialiased selection:bg-cyan-500/30">
 
-  <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 transition-all duration-200 z-20">
+  <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 fixed inset-y-0 left-0 -translate-x-full lg:translate-x-0 lg:static transition-transform duration-200 ease-in-out z-30">
     <div class="h-16 flex items-center justify-between px-4 border-b border-slate-800">
       <div class="flex items-center gap-2">
         <div class="h-6 w-6 rounded bg-cyan-500 flex items-center justify-center font-bold text-xs text-slate-950 font-mono">/</div>
         <span class="font-semibold text-sm tracking-wide uppercase font-mono">Central_Hub</span>
       </div>
+      <button id="sidebarCloseBtn" class="text-slate-400 hover:text-slate-100 p-1.5 rounded hover:bg-slate-800 lg:hidden focus:outline-none">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </div>
     <nav class="flex-1 overflow-y-auto p-3 space-y-1">
       <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md bg-slate-800 text-cyan-400 border-l-2 border-cyan-500">Dashboard Home</a>
@@ -24,7 +27,13 @@
   </aside>
 
   <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    
     <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6 shrink-0 gap-4">
+      
+      <button id="sidebarToggleBtn" class="text-slate-400 hover:text-slate-100 p-1.5 rounded hover:bg-slate-800 lg:hidden focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
       <div class="w-full max-w-xl relative">
         <input type="text" id="searchInput" placeholder="Search tools, assets, or docs... (Press '/' to focus)" class="w-full pl-9 pr-12 py-1.5 bg-slate-950 border border-slate-800 rounded-md text-sm text-slate-200 focus:outline-none focus:border-cyan-500 font-mono">
       </div>
