@@ -82,7 +82,7 @@ const template = `
       <div class="notes-content p-4 space-y-4 border-t border-slate-800 text-xs text-slate-400 hidden">
         <div>
           <h5 class="font-bold text-slate-200 mb-1">IBW (Ideal Body Weight)</h5>
-          <p class="mb-2">Used to calculate predicted Tidal Volume based on patient Height and Gender ($\text{Height} \ge 60 \text{ in}$):</p>
+          <p class="mb-2">Used to calculate predicted Tidal Volume based on patient Height and Gender (\\(\\text{Height} \\ge 60 \\text{ in}\\)):</p>
           $$ \\text{IBW (kg)} = \\begin{cases} 50 + 2.3 \\times (\\text{Height (in)} - 60) & \\text{for Males} \\\\ 45.5 + 2.3 \\times (\\text{Height (in)} - 60) & \\text{for Females} \\end{cases} $$
           <p class="mt-2 text-slate-500">Note: When patient height is less than 60 in, a generic formula not gender reliant is utilized:</p>
           $$ \\text{IBW (kg)} = 50 - (0.9 \\times (60 - \\text{Height(in)})) $$
@@ -126,7 +126,7 @@ const template = `
           <span>&#9432; RR Formula Specs</span> <span class="text-[9px] text-slate-500">+/-</span>
         </h4>
         <div class="notes-content p-3 border-t border-slate-800 text-[11px] text-slate-400 hidden">
-          <p class="mb-1.5">Calculated using the relationship between minute ventilation and PaCO2 ($V_E \\times \\text{PaCO}_2 = \\text{constant}$), assuming tidal volume is held constant:</p>
+          <p class="mb-1.5">Calculated using the relationship between minute ventilation and \\(\\text{PaCO}_2\\) (\\(V_E \\times \\text{PaCO}_2 = \\text{constant}\\)), assuming tidal volume is held constant:</p>
           $$ \\text{RR}_{\\text{adj}} = \\frac{\\text{RR}_{\\text{curr}} \\times \\text{PaCO}_{\\text{2\\_curr}}}{\\text{PaCO}_{\\text{2\\_des}}} $$
         </div>
       </div>
@@ -160,7 +160,7 @@ const template = `
           <span>&#9432; TV Formula Specs</span> <span class="text-[9px] text-slate-500">+/-</span>
         </h4>
         <div class="notes-content p-3 border-t border-slate-800 text-[11px] text-slate-400 hidden">
-          <p class="mb-1.5">Calculated using the relationship between minute ventilation and PaCO2 ($V_E \\times \\text{PaCO}_2 = \\text{constant}$), assuming respiratory rate is held constant:</p>
+          <p class="mb-1.5">Calculated using the relationship between minute ventilation and \\(\\text{PaCO}_2\\) (\\(V_E \\times \\text{PaCO}_2 = \\text{constant}\\)), assuming respiratory rate is held constant:</p>
           $$ \\text{TV}_{\\text{adj}} = \\frac{\\text{TV}_{\\text{curr}} \\times \\text{PaCO}_{\\text{2\\_curr}}}{\\text{PaCO}_{\\text{2\\_des}}} $$
         </div>
       </div>
