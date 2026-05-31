@@ -75,4 +75,17 @@
     </main>
   </div>
 
-  <div id="calcModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-2
+  <div id="calcModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-200 p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl transform scale-95 transition-transform duration-200 overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-800 bg-slate-900 flex items-center justify-between sticky top-0 z-10">
+        <h2 class="text-lg font-bold text-slate-100 font-mono">Ventilator Settings Calculator Dashboard</h2>
+        <button id="closeCalcBtn" class="text-slate-400 hover:text-slate-100 p-1.5 rounded-lg hover:bg-slate-800">✕</button>
+      </div>
+      <div id="vent-calc-container" class="flex-1 overflow-y-auto p-6 space-y-6"></div>
+    </div>
+  </div>
+
+  <script src="js/modules/ventCalculator.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

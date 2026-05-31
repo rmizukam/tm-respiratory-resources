@@ -1,5 +1,5 @@
 /**
- * Module: Ventilator Settings Calculator Engine (MathJax Fixed)
+ * Module: Ventilator Settings Calculator Engine (MathJax & Classic Script Fixed)
  */
 
 const INVARIANTS = {
@@ -75,7 +75,7 @@ const template = `
     </div>
 
     <div class="border border-slate-800 rounded bg-slate-900/30 overflow-hidden">
-      <h4 class="notes-header px-3 py-2 bg-slate-900/70 text-xs font-mono font-bold text-slate-400 flex items-center justify-between cursor-pointer hover:bg-slate-800/60 transition-colors">
+      <h4 class="notes-header px-3 py-2 bg-slate-900/70 text-xs font-mono font-bold text-slate-400 flex items-center justify-between cursor-pointer hover:bg-slate-800/60 transition-all">
         <span>&#9432; Baseline Equation Notes & Formulas</span>
         <span class="text-[10px] text-slate-500 uppercase">Click to Toggle</span>
       </h4>
@@ -122,7 +122,7 @@ const template = `
       </div>
 
       <div class="border border-slate-800 rounded bg-slate-900/30 overflow-hidden">
-        <h4 class="notes-header px-2 py-1 bg-slate-900/70 text-[10px] font-mono font-bold text-slate-400 flex items-center justify-between cursor-pointer hover:bg-slate-800/60 transition-colors">
+        <h4 class="notes-header px-2 py-1 bg-slate-900/70 text-[10px] font-mono font-bold text-slate-400 flex items-center justify-between cursor-pointer hover:bg-slate-800/60 transition-all">
           <span>&#9432; RR Formula Specs</span> <span class="text-[9px] text-slate-500">+/-</span>
         </h4>
         <div class="notes-content p-3 border-t border-slate-800 text-[11px] text-slate-400 hidden">
@@ -156,7 +156,7 @@ const template = `
       </div>
 
       <div class="border border-slate-800 rounded bg-slate-900/30 overflow-hidden">
-        <h4 class="notes-header px-2 py-1 bg-slate-900/70 text-[10px] font-mono font-bold text-slate-400 flex items-center justify-between cursor-pointer hover:bg-slate-800/60 transition-colors">
+        <h4 class="notes-header px-2 py-1 bg-slate-900/70 text-[10px] font-mono font-bold text-slate-400 flex items-center justify-between cursor-pointer hover:bg-slate-800/60 transition-all">
           <span>&#9432; TV Formula Specs</span> <span class="text-[9px] text-slate-500">+/-</span>
         </h4>
         <div class="notes-content p-3 border-t border-slate-800 text-[11px] text-slate-400 hidden">
@@ -168,14 +168,13 @@ const template = `
   </div>
 `;
 
-export function initVentCalculator(containerId) {
+// Classic Script execution frame (No "export" needed)
+function initVentCalculator(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  // Render module markup layout elements safely
   container.innerHTML = template;
 
-  // Scoped Query Selectors Mapping
   const piHeightInput = document.getElementById('pi_height_input');
   const piHeightUnit = document.getElementById('pi_height_unit');
   const piWeightInput = document.getElementById('pi_weight_input');
@@ -192,20 +191,18 @@ export function initVentCalculator(containerId) {
   const desiredPaco2Tv = document.getElementById('desired-pac02-tv');
   const tvUnitOut = document.getElementById('tidal-volume-unit-adj-out');
 
-  // Accordion Toggle Logic Linker with typeset queueing
+  // Accordion Toggle Logic Linker
   container.querySelectorAll('.notes-header').forEach(header => {
     header.addEventListener('click', () => {
       const content = header.nextElementSibling;
       content.classList.toggle('hidden');
       
-      // Tell MathJax to re-parse the container since its display status shifted
       if (!content.classList.contains('hidden') && window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
         window.MathJax.typesetPromise([content]);
       }
     });
   });
 
-  // Scoped Calculation Pipeline Subroutines
   function selectOnFocus(e) {
     if (parseFloat(e.target.value) === 0) e.target.select();
   }
@@ -286,7 +283,7 @@ export function initVentCalculator(containerId) {
     document.getElementById('result-adjusted-tv').textContent = adjTV.toFixed(2);
   }
 
-  // Bind Listeners
+  // Event Listeners Binding
   const inputs = [piHeightInput, piWeightInput, tvCustomInput, currRrInput, currPaco2Rr, desiredPaco2Rr, currTvInput, currPaco2Tv, desiredPaco2Tv];
   inputs.forEach(input => {
     input.addEventListener('focus', selectOnFocus);
@@ -304,10 +301,8 @@ export function initVentCalculator(containerId) {
   tvUnitIn.addEventListener('change', calculateTVAdjustment);
   tvUnitOut.addEventListener('change', calculateTVAdjustment);
 
-  // Initialize Attribute Vectors
   piHeightUnit.setAttribute('data-previous-unit', piHeightUnit.value);
   piWeightUnit.setAttribute('data-previous-unit', piWeightUnit.value);
 
-  // Initial calculation cycle
   calculatePVS();
 }

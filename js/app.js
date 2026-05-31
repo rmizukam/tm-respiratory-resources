@@ -1,5 +1,3 @@
-import { initVentCalculator } from './modules/ventCalculator.js';
-
 document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('searchInput');
   const toolCards = document.querySelectorAll('.tool-card');
@@ -9,7 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeCalcBtn = document.getElementById('closeCalcBtn');
 
   // Initialize the calculator module by passing it the container ID
-  initVentCalculator('vent-calc-container');
+  // (Function is safely loaded globally from ventCalculator.js)
+  if (typeof initVentCalculator === 'function') {
+    initVentCalculator('vent-calc-container');
+  }
 
   // Hub Global Search Filter Logic
   if (searchInput) {
