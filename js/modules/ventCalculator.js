@@ -1,5 +1,5 @@
 /**
- * Module: Ventilator Settings Calculator Engine
+ * Module: Ventilator Settings Calculator Engine (MathJax Fixed)
  */
 
 const INVARIANTS = {
@@ -8,7 +8,6 @@ const INVARIANTS = {
   KG_PER_LB: 0.453592
 };
 
-// Your full dashboard layout template, now containing the Equation Accordions
 const template = `
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="bg-slate-950 border border-slate-800 rounded-lg p-4">
@@ -84,24 +83,24 @@ const template = `
         <div>
           <h5 class="font-bold text-slate-200 mb-1">IBW (Ideal Body Weight)</h5>
           <p class="mb-2">Used to calculate predicted Tidal Volume based on patient Height and Gender ($\text{Height} \ge 60 \text{ in}$):</p>
-          $$ \text{IBW (kg)} = \begin{cases} 50 + 2.3 \times (\text{Height (in)} - 60) & \text{for Males} \\ 45.5 + 2.3 \times (\text{Height (in)} - 60) & \text{for Females} \end{cases} $$
+          $$ \\text{IBW (kg)} = \\begin{cases} 50 + 2.3 \\times (\\text{Height (in)} - 60) & \\text{for Males} \\\\ 45.5 + 2.3 \\times (\\text{Height (in)} - 60) & \\text{for Females} \\end{cases} $$
           <p class="mt-2 text-slate-500">Note: When patient height is less than 60 in, a generic formula not gender reliant is utilized:</p>
-          $$ \text{IBW (kg)} = 50 - (0.9 \times (60 - \text{Height(in)})) $$
+          $$ \\text{IBW (kg)} = 50 - (0.9 \\times (60 - \\text{Height(in)})) $$
         </div>
         <div>
           <h5 class="font-bold text-slate-200 mb-1">BSA (Body Surface Area)</h5>
           <p class="mb-2">Calculated using the Mosteller Formula, where height is in cm and weight is in kg:</p>
-          $$ \text{BSA (m}^2) = \sqrt{\frac{\text{Height (cm)} \times \text{Weight (kg)}}{3600}} $$
+          $$ \\text{BSA (m}^2) = \\sqrt{\\frac{\\text{Height (cm)} \\times \\text{Weight (kg)}}{3600}} $$
         </div>
         <div>
           <h5 class="font-bold text-slate-200 mb-1">Predicted Minute Ventilation (MV)</h5>
           <p class="mb-2">Calculated using gender-specific factors based on BSA:</p>
-          $$ \text{MV (L/min)} = \text{BSA} \times \begin{cases} 4.0 & \text{for Males} \\ 3.5 & \text{for Females} \end{cases} $$
+          $$ \\text{MV (L/min)} = \\text{BSA} \\times \\begin{cases} 4.0 & \\text{for Males} \\\\ 3.5 & \\text{for Females} \\end{cases} $$
         </div>
         <div>
           <h5 class="font-bold text-slate-200 mb-1">Predicted Respiratory Rate (RR)</h5>
           <p class="mb-2">Calculated by dividing the predicted minute ventilation by the selected tidal volume (converted to Liters):</p>
-          $$ \text{RR} = \frac{\text{Predicted MV (L/min)}}{\text{Tidal Volume (L)}} $$
+          $$ \\text{RR} = \\frac{\\text{Predicted MV (L/min)}}{\\text{Tidal Volume (L)}} $$
         </div>
       </div>
     </div>
@@ -127,8 +126,8 @@ const template = `
           <span>&#9432; RR Formula Specs</span> <span class="text-[9px] text-slate-500">+/-</span>
         </h4>
         <div class="notes-content p-3 border-t border-slate-800 text-[11px] text-slate-400 hidden">
-          <p class="mb-1.5">Calculated using the relationship between minute ventilation and PaCO2 ($V_E \times \text{PaCO}_2 = \text{constant}$), assuming tidal volume is held constant:</p>
-          $$ \text{RR}_{\text{adj}} = \frac{\text{RR}_{\text{curr}} \times \text{PaCO}_{\text{2\_curr}}}{\text{PaCO}_{\text{2\_des}}} $$
+          <p class="mb-1.5">Calculated using the relationship between minute ventilation and PaCO2 ($V_E \\times \\text{PaCO}_2 = \\text{constant}$), assuming tidal volume is held constant:</p>
+          $$ \\text{RR}_{\\text{adj}} = \\frac{\\text{RR}_{\\text{curr}} \\times \\text{PaCO}_{\\text{2\\_curr}}}{\\text{PaCO}_{\\text{2\\_des}}} $$
         </div>
       </div>
     </div>
@@ -161,8 +160,8 @@ const template = `
           <span>&#9432; TV Formula Specs</span> <span class="text-[9px] text-slate-500">+/-</span>
         </h4>
         <div class="notes-content p-3 border-t border-slate-800 text-[11px] text-slate-400 hidden">
-          <p class="mb-1.5">Calculated using the relationship between minute ventilation and PaCO2 ($V_E \times \text{PaCO}_2 = \text{constant}$), assuming respiratory rate is held constant:</p>
-          $$ \text{TV}_{\text{adj}} = \frac{\text{TV}_{\text{curr}} \times \text{PaCO}_{\text{2\_curr}}}{\text{PaCO}_{\text{2\_des}}} $$
+          <p class="mb-1.5">Calculated using the relationship between minute ventilation and PaCO2 ($V_E \\times \\text{PaCO}_2 = \\text{constant}$), assuming respiratory rate is held constant:</p>
+          $$ \\text{TV}_{\\text{adj}} = \\frac{\\text{TV}_{\\text{curr}} \\times \\text{PaCO}_{\\text{2\\_curr}}}{\\text{PaCO}_{\\text{2\\_des}}} $$
         </div>
       </div>
     </div>
@@ -193,14 +192,14 @@ export function initVentCalculator(containerId) {
   const desiredPaco2Tv = document.getElementById('desired-pac02-tv');
   const tvUnitOut = document.getElementById('tidal-volume-unit-adj-out');
 
-  // Accordion Toggle Logic Linker
+  // Accordion Toggle Logic Linker with typeset queueing
   container.querySelectorAll('.notes-header').forEach(header => {
     header.addEventListener('click', () => {
       const content = header.nextElementSibling;
       content.classList.toggle('hidden');
       
       // Tell MathJax to re-parse the container since its display status shifted
-      if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+      if (!content.classList.contains('hidden') && window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
         window.MathJax.typesetPromise([content]);
       }
     });
