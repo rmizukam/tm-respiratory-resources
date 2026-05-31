@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Hub Modal Control Logic
+  // Hub Modal Control Logic (Calculator)
   const openModal = () => {
     calcModal.classList.remove('hidden');
     setTimeout(() => calcModal.classList.add('active'), 10);
@@ -65,4 +65,32 @@ document.addEventListener('DOMContentLoaded', () => {
   if (openCalcBtn) openCalcBtn.addEventListener('click', openModal);
   if (closeCalcBtn) closeCalcBtn.addEventListener('click', closeModal);
   calcModal.addEventListener('click', (e) => { if (e.target === calcModal) closeModal(); });
+
+
+  // ================= PDF MODAL CONTROL PIPELINE =================
+  const pdfModal = document.getElementById('pdfModal');
+  const openPdfBtn = document.getElementById('openPdfBtn');
+  const closePdfBtn = document.getElementById('closePdfBtn');
+  const pdfViewerFrame = document.getElementById('pdfViewerFrame');
+  const pdfUrl = "https://www.idsmed.co.th/filesdirectserver/itp1/z_itp_17082021d2m1/02z-z912388070468.pdf";
+
+  if (openPdfBtn && pdfModal && pdfViewerFrame) {
+    openPdfBtn.addEventListener('click', () => {
+      // Set frame source dynamically when opened to avoid unnecessary network load on initial hub start
+      pdfViewerFrame.src = pdfUrl;
+      pdfModal.classList.remove('hidden');
+    });
+  }
+
+  const closePdfViewer = () => {
+    if (pdfModal && pdfViewerFrame) {
+      pdfModal.classList.add('hidden');
+      pdfViewerFrame.src = ""; // Clear active buffer allocation instantly
+    }
+  };
+
+  if (closePdfBtn) closePdfBtn.addEventListener('click', closePdfViewer);
+  if (pdfModal) {
+    pdfModal.addEventListener('click', (e) => { if (e.target === pdfModal) closePdfViewer(); });
+  }
 });
