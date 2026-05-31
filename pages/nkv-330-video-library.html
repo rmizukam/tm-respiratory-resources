@@ -9,12 +9,15 @@
 </head>
 <body class="flex h-full overflow-hidden font-sans antialiased selection:bg-cyan-500/30">
 
-  <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 transition-all duration-200 z-20">
+  <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 fixed inset-y-0 left-0 -translate-x-full lg:fixed transition-transform duration-200 ease-in-out z-30">
     <div class="h-16 flex items-center justify-between px-4 border-b border-slate-800">
       <div class="flex items-center gap-2">
         <div class="h-6 w-6 rounded bg-cyan-500 flex items-center justify-center font-bold text-xs text-slate-950 font-mono">/</div>
         <span class="font-semibold text-sm tracking-wide uppercase font-mono">Central_Hub</span>
       </div>
+      <button id="sidebarCloseBtn" class="text-slate-400 hover:text-slate-100 p-1.5 rounded hover:bg-slate-800 focus:outline-none">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </div>
     <nav class="flex-1 overflow-y-auto p-3 space-y-1">
       <div class="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider font-mono">Navigation</div>
@@ -34,7 +37,10 @@
 
   <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
     <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6 shrink-0">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-3">
+        <button id="sidebarToggleBtn" class="text-slate-400 hover:text-slate-100 p-1.5 rounded hover:bg-slate-800 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
         <h1 class="text-md font-bold font-mono tracking-tight uppercase text-slate-200">NKV-330_System_Library</h1>
       </div>
       <span id="catalog-counter" class="text-xs font-mono text-cyan-400">Loading catalog modules...</span>
@@ -78,6 +84,16 @@
       const counter = document.getElementById('catalog-counter');
       if (counter) counter.textContent = `Catalog Index: ${nkvPlaylistData.length} Video Assets Linked`;
       grid.innerHTML = "";
+
+      // Sidebar Sliding Toggle Implementation
+      const sidebarNode = document.getElementById('sidebar');
+      const sidebarToggle = document.getElementById('sidebarToggleBtn');
+      const sidebarClose = document.getElementById('sidebarCloseBtn');
+
+      if (sidebarToggle && sidebarClose && sidebarNode) {
+        sidebarToggle.addEventListener('click', () => sidebarNode.classList.remove('-translate-x-full'));
+        sidebarClose.addEventListener('click', () => sidebarNode.classList.add('-translate-x-full'));
+      }
 
       nkvPlaylistData.forEach(video => {
         const cardHTML = `
