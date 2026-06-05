@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secondary Video Training Library</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="flex h-full overflow-hidden font-sans antialiased selection:bg-cyan-500/30">
+
+  <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 fixed inset-y-0 left-0 -translate-x-full lg:fixed transition-transform duration-200 ease-in-out z-30"></aside>
+
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6 shrink-0">
+      <div class="flex items-center gap-3">
+        <button id="sidebarToggleBtn" class="text-slate-400 hover:text-slate-100 p-1.5 rounded hover:bg-slate-800 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <h1 class="text-md font-bold font-mono tracking-tight uppercase text-slate-200">Secondary_System_Library</h1>
+      </div>
+      <span id="catalog-counter" class="text-xs font-mono text-cyan-400">Loading catalog modules...</span>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-6 space-y-6">
+      <div class="border-b border-slate-800 pb-4">
+        <h2 class="text-xl font-bold text-slate-100 mb-1">High-Frequency Percussive Ventilation (VDR) Suite</h2>
+        <p class="text-sm text-slate-400 max-w-2xl">Operational training workflows covering system calibration frameworks, pneumatic circuit setup, and adjustments.</p>
+      </div>
+
+      <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-[1600px]"></div>
+    </main>
+  </div>
+
+  <div id="videoModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4"></div>
+
+  <script>
+    const secondaryPlaylistData = [
+      { id: "5ScV74gyJ8k", segment: "Module 01", title: "VDR Setup & Breathing Circuit Pneumatics", length: "08:45", type: "Hardware Calibration" },
+      { id: "6D_s8iNfArg", segment: "Module 02", title: "VDR Initial Settings & Baseline Parameters", length: "12:14", type: "System Configuration" },
+      { id: "jvJEs1lyqQw", segment: "Module 03", title: "VDR Additional Controls & Overrides", length: "06:50", type: "Clinical Adjustments" }
+    ];
+
+    const ACTIVE_PAGE_KEY = "secondary"; 
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Fetch Shared Fragment Assets from Parent Relative Directory Step
+      try {
+        const sidebarResponse = await fetch('../components/sidebar.html');
+        document.getElementById('sidebar').innerHTML = await sidebarResponse.text();
+
+        const modalResponse = await fetch('../components/videoModal.html');
+        document.getElementById('videoModal').innerHTML = await modalResponse.text();
+
+        // Adjust paths for the sidebar links since we are inside the pages/ subfolder
+        document.querySelectorAll('#sidebar nav a').forEach(link => {
+          const type = link.getAttribute('data-path');
+          if (type === 'root') {
+            link.setAttribute('href', '../index.html');
+          }
+        });
+      } catch (err) {
+        console.error("Failed to assemble component fragments:", err);
+        return;
+      }
+
+      // 2. Synchronize active state styling
+      const activeLink = document.querySelector(`[data-nav="${ACTIVE_PAGE_KEY}"]`);
+      if (activeLink) {
+        activeLink.classList.remove('text-slate-400', 'hover:bg-slate-800/50', 'hover:text-slate-200');
+        activeLink.classList.add('bg-slate-800', 'text-cyan-400', 'border-l-2', 'border-cyan-500');
+      }
+
+      // 3. Initialize layout elements and telemetry indicators
+      const grid = document.getElementById('videoGrid');
+      const catalogCounter = document.getElementById('catalog-counter');
+      const sidebarCounter = document.getElementById('sidebar-counter');
+      
+      if (catalogCounter) catalogCounter.textContent = `Catalog Index: ${secondaryPlaylistData.length} VDR Assets Linked`;
+      if (sidebarCounter) sidebarCounter.textContent = `${secondaryPlaylistData.length} Modules Loaded`;
+      grid.innerHTML = "";
+
+      // 4. Bind listeners
+      const sidebarNode = document.getElementById('sidebar');
+      const sidebarToggle = document.getElementById('sidebarToggleBtn');
+
+      document.body.addEventListener('click', (e) => {
+        const closeBtn = e.target.closest('#sidebarCloseBtn');
+        if (closeBtn && sidebarNode) sidebarNode.classList.add('-translate-x-full');
+      });
+      if (sidebarToggle && sidebarNode) {
+        sidebarToggle.addEventListener('click', () => sidebarNode.classList.remove('-translate-x-full'));
+      }
+
+      const videoModal = document.getElementById('videoModal');
+      const modalFrame = document.getElementById('videoPlayerFrame');
+      const modalTitle = document.getElementById('modalVideoTitle');
+
+      document.body.addEventListener('click', (e) => {
+        if (e.target.closest('#closeVideoBtn') || e.target === videoModal) {
+          videoModal.classList.add('hidden');
+          modalFrame.src = "";
+        }
+      });
+
+      window.openVideoPlayer = function(videoId, videoTitle) {
+        if (!videoModal || !modalFrame) return;
+        modalTitle.textContent = videoTitle;
+        modalFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        videoModal.classList.remove('hidden');
+      };
+
+      // 5. Populate video card grid
+      secondaryPlaylistData.forEach(video => {
+        const cleanTitle = video.title.replace(/"/g, '&quot;');
+        const cardHTML = `
+          <div onclick="openVideoPlayer('${video.id}', '${cleanTitle}')" class="bg-slate-900 border border-slate-800/80 rounded-lg overflow-hidden flex flex-col hover:border-slate-700 hover:shadow-lg hover:shadow-cyan-950/5 transition-all duration-200 group block cursor-pointer">
+            <div class="aspect-video w-full relative flex items-center justify-center overflow-hidden bg-slate-950">
+              <img src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg" alt="${cleanTitle}" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-102 group-hover:opacity-40 transition-all duration-300">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent opacity-70"></div>
+              <span class="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-slate-950/95 border border-slate-800 text-[9px] font-mono text-slate-400 font-medium z-10">${video.length}</span>
+              <div class="h-9 w-9 rounded-full bg-slate-900/90 border border-slate-700/60 flex items-center justify-center text-cyan-400 shadow group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:border-transparent transition-all z-10">
+                <svg class="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div class="p-3 flex-1 flex flex-col justify-between space-y-2">
+              <div>
+                <div class="flex items-center justify-between text-[9px] font-mono tracking-tight mb-1">
+                  <span class="text-cyan-400 font-bold uppercase">${video.segment} • ${video.type}</span>
+                  <span class="text-slate-500">In-Hub Player</span>
+                </div>
+                <h3 class="text-xs font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors line-clamp-2 leading-tight">${video.title}</h3>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.insertAdjacentHTML('beforeend', cardHTML);
+      });
+    });
+  </script>
+</body>
+</html>

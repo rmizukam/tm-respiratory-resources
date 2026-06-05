@@ -11,25 +11,11 @@
 </head>
 <body class="flex h-full overflow-hidden font-sans antialiased selection:bg-cyan-500/30">
 
-  <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 fixed inset-y-0 left-0 -translate-x-full lg:translate-x-0 lg:static transition-transform duration-200 ease-in-out z-30">
-    <div class="h-16 flex items-center justify-between px-4 border-b border-slate-800">
-      <div class="flex items-center gap-2">
-        <div class="h-6 w-6 rounded bg-cyan-500 flex items-center justify-center font-bold text-xs text-slate-950 font-mono">/</div>
-        <span class="font-semibold text-sm tracking-wide uppercase font-mono">Central_Hub</span>
-      </div>
-      <button id="sidebarCloseBtn" class="text-slate-400 hover:text-slate-100 p-1.5 rounded hover:bg-slate-800 lg:hidden focus:outline-none">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-    </div>
-    <nav class="flex-1 overflow-y-auto p-3 space-y-1">
-      <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md bg-slate-800 text-cyan-400 border-l-2 border-cyan-500">Dashboard Home</a>
-    </nav>
-  </aside>
+  <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 fixed inset-y-0 left-0 -translate-x-full lg:translate-x-0 lg:static transition-transform duration-200 ease-in-out z-30"></aside>
 
   <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
     
     <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6 shrink-0 gap-4">
-      
       <button id="sidebarToggleBtn" class="text-slate-400 hover:text-slate-100 p-1.5 rounded hover:bg-slate-800 lg:hidden focus:outline-none">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
@@ -40,26 +26,42 @@
     </header>
 
     <main class="flex-1 overflow-y-auto p-6 space-y-8">
+      
       <section>
         <div class="flex items-center gap-2 mb-4">
-          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">Reference Links & Resources</h2>
+          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">NKV-330 Platform Resources</h2>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           
-          <a href="pages/nkv-330-video-library.html" target="_self" class="resource-card bg-slate-900/60 border border-slate-800 p-3.5 rounded-xl flex items-center justify-between group transition-all hover:border-slate-700 hover:bg-slate-900" data-title="clinical media video library archive recordings instructional lectures instruction waveform tutorials youtube arcs addresses">
-            <span class="text-sm font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors">Clinical Media & Video Library</span>
+          <a href="pages/nkv-330-video-library.html" target="_self" class="resource-card bg-slate-900/60 border border-slate-800 p-3.5 rounded-xl flex items-center justify-between group transition-all hover:border-slate-700 hover:bg-slate-900" data-title="clinical media video library archive recordings instructional lectures instruction waveform tutorials youtube arcs addresses nkv 330 ventilator media training">
+            <span class="text-sm font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors">NKV-330 Video Library</span>
             <svg class="w-3.5 h-3.5 text-slate-600 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </a>
 
-          <button id="openPdfBtn" class="resource-card bg-slate-900/60 border border-slate-800 p-3.5 rounded-xl flex items-center justify-between group transition-all hover:border-slate-700 hover:bg-slate-900 text-left w-full focus:outline-none" data-title="nihon kohden nkv-330 nkv330 series ventilator system dynamic noninvasive non-invasive respiratory documentation manual pdf">
-            <span class="text-sm font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors">NKV-330 Series Ventilator System Operator's Manual</span>
+          <button id="openPdfBtn" class="resource-card bg-slate-900/60 border border-slate-800 p-3.5 rounded-xl flex items-center justify-between group transition-all hover:border-slate-700 hover:bg-slate-900 text-left w-full focus:outline-none" data-title="nihon kohden nkv-330 nkv330 series ventilator system dynamic noninvasive non-invasive respiratory documentation manual pdf book user manual operator manual reference documentation">
+            <span class="text-sm font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors">NKV-330 Operator's Manual</span>
             <svg class="w-3.5 h-3.5 text-slate-600 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </button>
+
+        </div>
+      </section>
+
+      <section>
+        <div class="flex items-center gap-2 mb-4">
+          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">VDR System Resources</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          
+          <a href="pages/vdr-inservice-video-library.html" target="_self" class="resource-card bg-slate-900/60 border border-slate-800 p-3.5 rounded-xl flex items-center justify-between group transition-all hover:border-slate-700 hover:bg-slate-900" data-title="clinical media video library archive recordings instructional lectures high frequency percussive ventilation vdr inservice competencies competencies media training">
+            <span class="text-sm font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors">VDR Inservice Video Library</span>
+            <svg class="w-3.5 h-3.5 text-slate-600 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
 
         </div>
       </section>
@@ -81,7 +83,6 @@
               </button>
               <p class="text-sm text-slate-400 mt-2">Predict initial settings via IBW and BSA, or evaluate adjustments relative to targeted PaCO₂.</p>
             </div>
-            
             <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs font-mono text-slate-500">
               <span>Status: Active</span>
               <span class="text-[10px] uppercase tracking-wider text-slate-600">Core Diagnostic</span>
