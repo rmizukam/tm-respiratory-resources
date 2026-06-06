@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const searchInput = document.getElementById('searchInput');
   const toolCards = document.querySelectorAll('.tool-card');
   const cardCountDisplay = document.getElementById('cardCount');
@@ -6,27 +6,48 @@ document.addEventListener('DOMContentLoaded', () => {
   const openCalcBtn = document.getElementById('openCalcBtn');
   const closeCalcBtn = document.getElementById('closeCalcBtn');
 
-  // Mobile Drawer Selector Tree Elements
-  const sidebarNode = document.getElementById('sidebar');
-  const sidebarToggle = document.getElementById('sidebarToggleBtn');
-  const sidebarClose = document.getElementById('sidebarCloseBtn');
-
-  // Trigger Sidebar Sliding Drawer Handlers
-  if (sidebarToggle && sidebarClose && sidebarNode) {
-    sidebarToggle.addEventListener('click', () => sidebarNode.classList.remove('-translate-x-full'));
-    sidebarClose.addEventListener('click', () => sidebarNode.classList.add('-translate-x-full'));
+  // Load Component Layout from Root Context
+  const sidebarContainer = document.getElementById('sidebar');
+  if (sidebarContainer) {
+    try {
+      const response = await fetch('components/sidebar.html');
+      sidebarContainer.innerHTML = await response.text();
+      
+      // Fix paths for subpage targets because we are on the root level
+      document.querySelectorAll('#sidebar nav a').forEach(link => {
+        const type = link.getAttribute('data-path');
+        const href = link.getAttribute('href');
+        if (type === 'page' && href) {
+          link.setAttribute('href', 'pages/' + href);
+        } else if (type === 'root') {
+          link.setAttribute('href', '#'); // Already on home dashboard
+          link.classList.add('bg-slate-800/40', 'text-cyan-500');
+        }
+      });
+    } catch (err) {
+      console.error("Failed to load root sidebar component:", err);
+    }
   }
 
-  // Global Engine Module Injection Setup
+  // Sidebar Open/Close Layout Mobile Drawer Handlers
+  const sidebarNode = document.getElementById('sidebar');
+  const sidebarToggle = document.getElementById('sidebarToggleBtn');
+  // Delayed binding to catch dynamic close button element
+  document.body.addEventListener('click', (e) => {
+    const closeBtn = e.target.closest('#sidebarCloseBtn');
+    if (closeBtn && sidebarNode) sidebarNode.classList.add('-translate-x-full');
+  });
+  if (sidebarToggle && sidebarNode) {
+    sidebarToggle.addEventListener('click', () => sidebarNode.classList.remove('-translate-x-full'));
+  }
+
   if (typeof initVentCalculator === 'function') {
     initVentCalculator('vent-calc-container');
   }
 
-  // Hub Global Search Filter Logic
   if (searchInput) {
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase().trim();
-      
       let visibleToolsCount = 0;
       toolCards.forEach(card => {
         if (card.getAttribute('data-title').includes(query)) {
@@ -44,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Global Keyboard Shortcuts
   window.addEventListener('keydown', (e) => {
     if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'SELECT') {
       e.preventDefault();
@@ -52,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Hub Modal Control Logic (Calculator)
   const openModal = () => {
     calcModal.classList.remove('hidden');
     setTimeout(() => calcModal.classList.add('active'), 10);
@@ -66,8 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeCalcBtn) closeCalcBtn.addEventListener('click', closeModal);
   calcModal.addEventListener('click', (e) => { if (e.target === calcModal) closeModal(); });
 
-
-  // ================= PDF MODAL CONTROL PIPELINE =================
+  // Embedded PDF Viewer Control Logic
   const pdfModal = document.getElementById('pdfModal');
   const openPdfBtn = document.getElementById('openPdfBtn');
   const closePdfBtn = document.getElementById('closePdfBtn');
@@ -76,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (openPdfBtn && pdfModal && pdfViewerFrame) {
     openPdfBtn.addEventListener('click', () => {
-      // Set frame source dynamically when opened to avoid unnecessary network load on initial hub start
       pdfViewerFrame.src = pdfUrl;
       pdfModal.classList.remove('hidden');
     });
@@ -85,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const closePdfViewer = () => {
     if (pdfModal && pdfViewerFrame) {
       pdfModal.classList.add('hidden');
-      pdfViewerFrame.src = ""; // Clear active buffer allocation instantly
+      pdfViewerFrame.src = "";
     }
   };
 
